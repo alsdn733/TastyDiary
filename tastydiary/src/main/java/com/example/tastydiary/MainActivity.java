@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         rvMemo = findViewById(R.id.rvMemo);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvMemo.setLayoutManager(linearLayoutManager);
 
         memoAdapter = new MemoAdapter();
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         int newIndex = MemoCollection.newMemo();
 
         memoAdapter.notifyItemInserted(newIndex);
+        TextMemo = data.getStringExtra("result");
 
 
 
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 //        if (resultCode != RESULT_OK) {
 //            Toast.makeText(getBaseContext(), "저장을 실패하였습니다.", Toast.LENGTH_SHORT).show();
 //        } else {
-//            TextMemo = data.getStringExtra("result");
+//
 //        }
     }
 
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull MemoViewHolder holder, int position) {
 
             Memo memo = MemoCollection.getMemo(position);
-
+            memo.memo = TextMemo;
             holder.tvMemo.setText(memo.memo != null ? memo.memo : "메모 없음");
         }
 
@@ -148,9 +149,8 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
 
             tvMemo = itemView.findViewById(R.id.tvMemo);
-            Memo memo = MemoCollection.getMemo(getLayoutPosition());
-            memo.setMemo(TextMemo);
-            memoAdapter.notifyItemChanged(getLayoutPosition());
+
+
 
         }
     }
